@@ -1,0 +1,5 @@
+/venv
+.env
+/app/test.py
+/app/__pycache__
+/.idea
