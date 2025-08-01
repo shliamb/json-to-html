@@ -1,10 +1,14 @@
 import re
 import json
 from config import INPUT_DATA, OUTPUT_DATA
-from html import record_price, get_html, get_schema_html
+from html import record_price, get_html, get_schema_html, get_images
 
 
 
+
+
+def clean_text(text: str) -> str:
+    return re.sub(r'<[^>]+>', '', text)
 
 def extract_digits_after_r(text: str):
     match = re.search(r'[Rр₽](\d+)', text)
@@ -24,10 +28,12 @@ def main():
 
             canonical = values.get("canonical")
             title = values.get("title")
+            h1_title = values.get("h1")
             serv_name = values.get("serv_name")
             description = values.get("description")
+            servicetype = values.get("servicetype")
 
-            schema_html = get_schema_html(serv_name, title, canonical, description)
+            schema_html = get_schema_html(page, serv_name, h1_title, canonical, description, servicetype)
 
             html_price = ""
             price = values.get("price")
@@ -39,21 +45,42 @@ def main():
                     time = bit_price.get("time") or ""
                     cost = bit_price.get("cost") or ""
                     cost_text = bit_price.get("cost-text") or ""
+                    servicetype = bit_price.get("servicetype") or ""
 
-                    offer = {
-                        "@type": "Offer",
-                        "itemOffered": {
-                            "@type": "Service",
-                            "name": pricing_title,
-                            "description": pricing_text,
-                            "price": extract_digits_after_r(cost),
+
+                    if page == "index":
+                        offer = {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": clean_text(pricing_title),
+                                "serviceType": servicetype
+                            },
+                            "price": int(extract_digits_after_r(cost)),
                             "priceCurrency": "RUB"
                         }
-                    }
-                    schema_html["hasOfferCatalog"]["itemListElement"].append(offer)
+                        schema_html["hasOfferCatalog"]["itemListElement"].append(offer)
+                    else:
+                        offer = {
+                            "@type": "Offer",
+                            "name": clean_text(pricing_title),
+                            "price": int(extract_digits_after_r(cost)),
+                            "priceCurrency": "RUB"
+                        }
+                        schema_html["offers"].append(offer)
 
                     row_price_html = record_price(pricing_title, pricing_text, time, cost, cost_text)
                     html_price += row_price_html
+
+            html_images = ""
+            list_images = values.get("images")
+            if list_images:
+                for image in list_images:
+                    mini = image.get("mini") or ""
+                    alt = image.get("alt") or ""
+                    orig = image.get("orig") or ""
+                    img_title = image.get("title") or ""
+                    html_images += get_images(mini, alt, orig, img_title)
 
             data = {
                 "html_price": html_price,
@@ -63,9 +90,15 @@ def main():
                 "description": description,
                 "image": values.get("image"),
                 "schema_html": json.dumps(schema_html, ensure_ascii=False, indent=4),
-                "title": title
+                "title": title,
+                "images": html_images,
+                "h1": values.get("h1"),
+                "img_title": values.get("img_title"),
+                "img_alt": values.get("img_alt"),
+                "message_under_table": values.get("message_under_table")
 
             }
+
             html_final = get_html(data)
             if html_final:
                 successful_html += 1
