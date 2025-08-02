@@ -15,10 +15,10 @@ IMAGE_STARS = "/images/main/5stars.webp"
 YOUTUBE_CHANEL = "https://www.youtube.com/@onermaster"
 
 # RATING:
-YANDEX_RATING = 5
-YANDEX_RATING_COUNT = 169
-GOOGLE_RATING = 4.4
-GOOGLE_RATING_COUNT = 108
+YANDEX_RATING = "5.0"
+YANDEX_RATING_COUNT = "169"
+GOOGLE_RATING = "4.4"
+GOOGLE_RATING_COUNT = "108"
 
 # ADDRESS:
 ADDRESS = "улица 3-я Парковая, дом 38"

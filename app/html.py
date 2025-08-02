@@ -1,5 +1,6 @@
 from config import PROJ, ADDRESS, CITY, POSTALCODE, COUNTRY, TELEPHONE, EMAIL, SITE, OPENINGHOURS, META_IMAGE, GOOGLE_META, UNDER_H, IMAGE_STARS, YOUTUBE_CHANEL, GOOGLE_RATING, GOOGLE_RATING_COUNT, YANDEX_RATING, YANDEX_RATING_COUNT
 
+# Валидация shema - https://search.google.com/test/rich-results
 
 
 
@@ -47,7 +48,7 @@ def get_images(mini: str, alt: str, orig: str, title: str) -> str:
                                     <div class="portfolio-wrapper">
                                         <div class="portfolio-single">
                                             <div class="portfolio-thumb">
-                                                <img src="{mini}" class="img-responsive" alt="{alt}">
+                                                <img src="{mini}" class="img-responsive" alt="{alt}" title="{title}">
                                             </div>
                                             <div class="portfolio-view">
                                                 <ul class="nav nav-pills">
@@ -228,81 +229,56 @@ def get_html(data: dict) -> str:
 
 
 
-def get_schema_html(page: str, serv_name: str, h1_title: str, url: str, description: str, servicetype: str) -> dict:
+def get_schema_html(page: str, serv_name: str, h1_title: str, url: str, description: str) -> dict:
 
     if page == "index":
         schem = {
             "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "1rmaster - Ремонт ноутбуков",
-            "description": "Срочный и профессиональный ремонт ноутбуков в Москве у метро Первомайская. Опыт 15+ лет, гарантия до полугода.",
+            "@type": "ProfessionalService",
+            "@id": "https://www.1rmaster.ru/#provider",
+            "name": "1rmaster",
+            "description": "Профессиональный ремонт ноутбуков в Москве рядом с метро Первомайская. Опыт более 15 лет, гарантия на работы до 6 месяцев.",
             "image": "https://www.1rmaster.ru/images/logo-2.0.webp",
-            "priceRange": "1000-3800₽",
+            "priceRange": "RUB",
             "url": "https://www.1rmaster.ru/",
             "telephone": "+79998329934",
             "email": "1rmaster@mail.ru",
             "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "улица 3-я Парковая, дом 38",
+                "streetAddress": "3-я Парковая улица, 38",
                 "addressLocality": "Москва",
                 "postalCode": "105425",
                 "addressCountry": "RU"
             },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "55.801931",
-                "longitude": "37.782728"
-            },
-            "openingHours": ["Mo-Fr 11:00-19:00", "Sa 11:00-19:00"],
-
             "aggregateRating": {
                 "@type": "AggregateRating",
-                "ratingValue": 4.7,
-                "reviewCount": 277,
-                "bestRating": 5,
-                "worstRating": 1
+                "ratingValue": YANDEX_RATING,
+                "bestRating": "5",
+                "ratingCount": YANDEX_RATING_COUNT
             },
-            "review": [
-                {
-                    "@type": "Review",
-                    "author": {
-                        "@type": "Organization",
-                        "name": "Google"
-                    },
-                    "reviewRating": {
-                        "@type": "Rating",
-                        "ratingValue": GOOGLE_RATING,
-                        "bestRating": 5,
-                        "worstRating": 1
-                    }
-                },
-                {
-                    "@type": "Review",
-                    "author": {
-                        "@type": "Organization",
-                        "name": "Yandex"
-                    },
-                    "reviewRating": {
-                        "@type": "Rating",
-                        "ratingValue": YANDEX_RATING,
-                        "bestRating": 5,
-                        "worstRating": 1
-                    }
-                },
-                {
-                    "@type": "Review",
-                    "author": {"@type": "Person", "name": "Егор Паталах"},
-                    "reviewRating": {
-                        "@type": "Rating",
-                        "ratingValue": 5,
-                        "bestRating": 5,
-                        "worstRating": 1
-                    },
-                    "datePublished": "2025-07-31",
-                    "reviewBody": "Обращался за ремонтом ноутбука. Все очень оперативно и по делу. Мастер всегда на связи, описал весь процесс ремонта с фотоотчетом. Супер удобно и рядом на районе."
-                }
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 55.801931,
+                "longitude": 37.782728
+            },
+            # "openingHours": ["Mo-Fr 11:00-19:00", "Sa 11:00-19:00"],
 
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday"
+                    ],
+                    "opens": "11:00",
+                    "closes": "19:00"
+                }
             ],
+
             "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": serv_name,
@@ -318,59 +294,25 @@ def get_schema_html(page: str, serv_name: str, h1_title: str, url: str, descript
             "name": h1_title,
             "description": description,
             "url": url,
-            "serviceType": servicetype,
             "provider": {
-                "@type": "LocalBusiness",
+                "@type": "ProfessionalService",
+                "@id": "https://www.1rmaster.ru/#provider",
                 "name": "1rmaster",
-                "url": "https://www.1rmaster.ru",
-                "telephone": "+79998329934"
+                "priceRange": "RUB",
+                "telephone": "+79998329934",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "3-я Парковая улица, 38",
+                    "addressLocality": "Москва",
+                    "postalCode": "105425",
+                    "addressCountry": "RU"
+                },
+                "image": "https://www.1rmaster.ru/images/logo-2.0.webp"
             },
             "areaServed": {
-                "@type": "City",
-                "name": "Москва"
+                "@type": "Place",
+                "name": "Москва, ВАО, м. Первомайская",
             },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "55.801931",
-                "longitude": "37.782728"
-            },
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.7",
-                "reviewCount": "277",
-            "bestRating": "5",
-            "worstRating": "1"
-            },
-            "review": [
-                {
-                    "@type": "Review",
-                    "author": {
-                        "@type": "Organization",
-                        "name": "Google"
-                    },
-                    "reviewRating": {
-                        "@type": "Rating",
-                        "ratingValue": GOOGLE_RATING,
-                        "bestRating": "5",
-                        "worstRating": "1"
-                    },
-                    "reviewCount": GOOGLE_RATING_COUNT
-                },
-                {
-                    "@type": "Review",
-                    "author": {
-                        "@type": "Organization",
-                        "name": "Yandex"
-                    },
-                    "reviewRating": {
-                        "@type": "Rating",
-                        "ratingValue": YANDEX_RATING,
-                        "bestRating": "5",
-                        "worstRating": "1"
-                    },
-                    "reviewCount": YANDEX_RATING_COUNT
-                }
-            ],
             "offers": []
         }
 
@@ -381,68 +323,3 @@ def get_schema_html(page: str, serv_name: str, h1_title: str, url: str, descript
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-# def get_schema():
-#
-#     ff = {
-#         "@context": "https://schema.org",
-#         "@type": "Service",
-#         "serviceType": "Ремонт ноутбуков в Москве",
-#         "provider": {
-#             "@type": "LocalBusiness",
-#             "name": "1rmaster",
-#             "address": {
-#                 "@type": "PostalAddress",
-#                 "streetAddress": "улица 3-я Парковая, дом 38",
-#                 "addressLocality": "Москва",
-#                 "addressRegion": "Москва",
-#                 "postalCode": "105425",
-#                 "addressCountry": "Россия"
-#             },
-#             "telephone": "+79998329934",
-#             "email": " 1rmaster@mail.ru",
-#             "url": "https://www.1rmaster.ru",
-#             "openingHours": "Su-Fr 11:00-19:00"
-#         },
-#         "description": "Ремонт нутбуков, чистка, замена матрицы, диска и ремонт сложных ситуаций. Гарантия.",
-#         "areaServed": {
-#             "@type": "AdministrativeArea",
-#             "name": "Москва"
-#         },
-#         "hasOfferCatalog": {
-#             "@type": "OfferCatalog",
-#             "name": "Услуги по ремонту ноутбуков",
-#             "itemListElement": [
-#                 {
-#                     "@type": "Offer",
-#                     "itemOffered": {
-#                         "@type": "Service",
-#                         "name": "Чистка системы охлаждения и замена термопасты",
-#                         "description": "Чистка системы охлаждения и замена термопасты на пасту с фазовым переходом при клиенте",
-#                         "price": "2000",
-#                         "priceCurrency": "RUB"
-#                     }
-#                 },
-#                 {
-#                     "@type": "Offer",
-#                     "itemOffered": {
-#                         "@type": "Service",
-#                         "name": "Замена матрицы",
-#                         "description": "Замена матрицы на ноутбуке + стоимость матрицы",
-#                         "price": "2000",
-#                         "priceCurrency": "RUB"
-#                     }
-#                 }
-#             ]
-#         }
-#     }

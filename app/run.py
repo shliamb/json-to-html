@@ -10,6 +10,7 @@ from html import record_price, get_html, get_schema_html, get_images
 def clean_text(text: str) -> str:
     return re.sub(r'<[^>]+>', '', text)
 
+
 def extract_digits_after_r(text: str):
     match = re.search(r'[Rр₽](\d+)', text)
     return match.group(1) if match else None
@@ -31,9 +32,8 @@ def main():
             h1_title = values.get("h1")
             serv_name = values.get("serv_name")
             description = values.get("description")
-            servicetype = values.get("servicetype")
 
-            schema_html = get_schema_html(page, serv_name, h1_title, canonical, description, servicetype)
+            schema_html = get_schema_html(page, serv_name, h1_title, canonical, description)
 
             html_price = ""
             price = values.get("price")
@@ -45,7 +45,6 @@ def main():
                     time = bit_price.get("time") or ""
                     cost = bit_price.get("cost") or ""
                     cost_text = bit_price.get("cost-text") or ""
-                    servicetype = bit_price.get("servicetype") or ""
 
 
                     if page == "index":
@@ -54,18 +53,25 @@ def main():
                             "itemOffered": {
                                 "@type": "Service",
                                 "name": clean_text(pricing_title),
-                                "serviceType": servicetype
                             },
-                            "price": int(extract_digits_after_r(cost)),
-                            "priceCurrency": "RUB"
+                            "priceSpecification": {
+                                "@type": "PriceSpecification",
+                                "price": extract_digits_after_r(cost),
+                                "priceCurrency": "RUB",
+                                "valueAddedTaxIncluded": True
+                            }
                         }
                         schema_html["hasOfferCatalog"]["itemListElement"].append(offer)
                     else:
                         offer = {
                             "@type": "Offer",
                             "name": clean_text(pricing_title),
-                            "price": int(extract_digits_after_r(cost)),
-                            "priceCurrency": "RUB"
+                            "priceSpecification": {
+                                "@type": "PriceSpecification",
+                                "price": extract_digits_after_r(cost),
+                                "priceCurrency": "RUB",
+                                "valueAddedTaxIncluded": True
+                            }
                         }
                         schema_html["offers"].append(offer)
 
