@@ -1,16 +1,13 @@
-from config import PROJ, ADDRESS, CITY, POSTALCODE, COUNTRY, TELEPHONE, EMAIL, SITE, OPENINGHOURS, META_IMAGE, GOOGLE_META, UNDER_H, IMAGE_STARS, YOUTUBE_CHANEL, GOOGLE_RATING, GOOGLE_RATING_COUNT, YANDEX_RATING, YANDEX_RATING_COUNT
-
 # Валидация shema - https://search.google.com/test/rich-results
-
-
-
+from config import PROJ, ADDRESS, CITY, POSTALCODE, TELEPHONE, EMAIL, META_IMAGE, GOOGLE_META, UNDER_H, IMAGE_STARS, YOUTUBE_CHANEL, YANDEX_RATING, YANDEX_RATING_COUNT, MAIN_LOGO, SITE, PRICE_VAL
 
 
 
 
 
 def record_price(pricing_title: str, pricing_text: str, time: str, cost: str, cost_text: str) -> str:
-    html = f"""
+    """Обворачиваем цену в HTML."""
+    return f"""
                                     <div class="price-row">
                                         <div class="price-cell">
                                             <span class="pricing-title">
@@ -36,13 +33,14 @@ def record_price(pricing_title: str, pricing_text: str, time: str, cost: str, co
                                         </div>
                                     </div>
     """
-    return html
+
 
 
 
 
 def get_images(mini: str, alt: str, orig: str, title: str) -> str:
-    html = f"""
+    """Обворачиваем изображение в HTML."""
+    return f"""
     
                                 <div class="col-sm-3 col-xs-6 wow fadeIn animated" data-wow-duration="300ms" data-wow-delay="100ms" style="visibility: visible; animation-duration: 300ms; animation-delay: 100ms; animation-name: fadeIn;">
                                     <div class="portfolio-wrapper">
@@ -63,7 +61,6 @@ def get_images(mini: str, alt: str, orig: str, title: str) -> str:
                                 </div>
 
     """
-    return html
 
 
 
@@ -72,6 +69,7 @@ def get_images(mini: str, alt: str, orig: str, title: str) -> str:
 
 
 def get_html(data: dict) -> str:
+    """Собираем HTML страницу."""
     html_price = data.get("html_price") or ""
     keywords = data.get("keywords") or ""
     canonical = data.get("canonical") or ""
@@ -87,7 +85,7 @@ def get_html(data: dict) -> str:
     message_under_table = data.get("message_under_table") or ""
 
 
-    html = f"""
+    return f"""
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -222,34 +220,36 @@ def get_html(data: dict) -> str:
 </body>
 </html>
     """
-    return html
-
-
 
 
 
 
 def get_schema_html(page: str, serv_name: str, h1_title: str, url: str, description: str) -> dict:
+    """Генерирует JSON-LD разметку для SEO оптимизации."""
+
+    base_provider = {
+        "@type": "ProfessionalService",
+        "@id": f"{SITE}#provider",
+        "name": PROJ,
+        "priceRange": PRICE_VAL,
+        "telephone": TELEPHONE,
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": ADDRESS,
+            "addressLocality": CITY,
+            "postalCode": POSTALCODE,
+            "addressCountry": "RU"
+        },
+        "image": MAIN_LOGO
+    }
 
     if page == "index":
-        schem = {
+        return {
             "@context": "https://schema.org",
-            "@type": "ProfessionalService",
-            "@id": "https://www.1rmaster.ru/#provider",
-            "name": "1rmaster",
+            **base_provider,
             "description": "Профессиональный ремонт ноутбуков в Москве рядом с метро Первомайская. Опыт более 15 лет, гарантия на работы до 6 месяцев.",
-            "image": "https://www.1rmaster.ru/images/logo-2.0.webp",
-            "priceRange": "RUB",
-            "url": "https://www.1rmaster.ru/",
-            "telephone": "+79998329934",
-            "email": "1rmaster@mail.ru",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "3-я Парковая улица, 38",
-                "addressLocality": "Москва",
-                "postalCode": "105425",
-                "addressCountry": "RU"
-            },
+            "url": SITE,
+            "email": EMAIL,
             "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": YANDEX_RATING,
@@ -261,24 +261,12 @@ def get_schema_html(page: str, serv_name: str, h1_title: str, url: str, descript
                 "latitude": 55.801931,
                 "longitude": 37.782728
             },
-            # "openingHours": ["Mo-Fr 11:00-19:00", "Sa 11:00-19:00"],
-
-            "openingHoursSpecification": [
-                {
-                    "@type": "OpeningHoursSpecification",
-                    "dayOfWeek": [
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday",
-                        "Saturday"
-                    ],
-                    "opens": "11:00",
-                    "closes": "19:00"
-                }
-            ],
-
+            "openingHoursSpecification": [{
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                "opens": "11:00",
+                "closes": "19:00"
+            }],
             "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": serv_name,
@@ -286,37 +274,19 @@ def get_schema_html(page: str, serv_name: str, h1_title: str, url: str, descript
             }
         }
 
-    else:
-
-        schem = {
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": h1_title,
-            "description": description,
-            "url": url,
-            "provider": {
-                "@type": "ProfessionalService",
-                "@id": "https://www.1rmaster.ru/#provider",
-                "name": "1rmaster",
-                "priceRange": "RUB",
-                "telephone": "+79998329934",
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "3-я Парковая улица, 38",
-                    "addressLocality": "Москва",
-                    "postalCode": "105425",
-                    "addressCountry": "RU"
-                },
-                "image": "https://www.1rmaster.ru/images/logo-2.0.webp"
-            },
-            "areaServed": {
-                "@type": "Place",
-                "name": "Москва, ВАО, м. Первомайская",
-            },
-            "offers": []
-        }
-
-    return schem
+    return {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": h1_title,
+        "description": description,
+        "url": url,
+        "provider": base_provider,
+        "areaServed": {
+            "@type": "Place",
+            "name": "Москва, ВАО, м. Первомайская"
+        },
+        "offers": []
+    }
 
 
 

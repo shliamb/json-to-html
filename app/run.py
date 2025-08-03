@@ -8,15 +8,18 @@ from html import record_price, get_html, get_schema_html, get_images
 
 
 def clean_text(text: str) -> str:
+    """Забирает только текст"""
     return re.sub(r'<[^>]+>', '', text)
 
 
 def extract_digits_after_r(text: str):
+    """Забирает только первую цену, без текста и лишнего"""
     match = re.search(r'[Rр₽](\d+)', text)
     return match.group(1) if match else None
 
 
 def main():
+    """Главная функция которая заставляет все крутиться и пыхтеть)"""
     error_html = 0
     successful_html = 0
 
