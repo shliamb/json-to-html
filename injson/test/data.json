@@ -1,0 +1,205 @@
+{
+  "index": {
+    "canonical": "https://www.site.com/",
+    "title": "title",
+    "h1": "h1",
+    "serv_name": "service",
+    "keywords": ["service"],
+    "description": "service ...",
+    "image": "images/laptop/image.webp",
+    "img_title": "serv",
+    "img_alt": "serv",
+    "message_under_table": "** При предъявлении студенческого билета, сделаю скидку 10%",
+    "images": [
+      {
+        "mini": "images/laptop/mlaptop1.webp",
+        "alt": "Замена процессора intel",
+        "title": "Перепайка CPU",
+        "orig": "images/laptop/laptop1.jpg"
+      },
+      {
+        "mini": "images/laptop/mlaptop2.webp",
+        "alt": "Замена процессора Ryzen",
+        "title": "Смена Ryzen",
+        "orig": "images/laptop/laptop2.jpg"
+      },
+      {
+        "mini": "images/laptop/mlaptop3.webp",
+        "alt": "Восстановление маски после сервиса",
+        "title": "Реставрация маски",
+        "orig": "images/laptop/laptop3.jpg"
+      },
+      {
+        "mini": "images/laptop/mlaptop4.webp",
+        "alt": "Чистка ноутбука",
+        "title": "Очистка",
+        "orig": "images/laptop/laptop4.jpg"
+      }
+    ],
+    "price": [
+              {
+        "pricing-title": "Диагностика ноутбука",
+        "pricing-text": "оплачивается при отказе от ремонта",
+        "time": "1 час ~ 2 дня от сложности",
+        "cost": "₽1000",
+        "cost-text": null
+      },
+      {
+        "pricing-title": "Чистка системы охлаждения и замена термопасты",
+        "pricing-text": "термопаста с фазовым переходом",
+        "time": "<span class='span-yellow'>производиться на ваших глазах</span>",
+        "cost": "₽2000",
+        "cost-text": null
+      },
+      {
+        "pricing-title": "Замена матрицы ноутбука",
+        "pricing-text": "если матрицу ноутбука разбили, то ее придется поменять",
+        "time": "20 мин. при наличии",
+        "cost": "~ ₽2500",
+        "cost-text": "+ матрица"
+      },
+      {
+        "pricing-title": "Установка SSD диска",
+        "pricing-text": "покупая ssd показываю ссылку, чеки, можете купить сами",
+        "time": "1 час ~ 1 день",
+        "cost": "~ ₽1000",
+        "cost-text": "+ диск"
+      },
+      {
+        "pricing-title": "Поменять разъем зарядки",
+        "pricing-text": "если ноутбук не заряжается, поврежден разъем",
+        "time": "1 час ~ 1 день",
+        "cost": "~ ₽1500",
+        "cost-text": "+ разъем"
+      },
+      {
+        "pricing-title": "Установка клавиатуры в топкейс",
+        "pricing-text": "супер качественно, каждую заклепку в ручную",
+        "time": "~ 1 день",
+        "cost": "~ ₽3800",
+        "cost-text": "+ клавиатура"
+      },
+      {
+        "pricing-title": "<a href='/loops.html'>Восстановление крепления петель</a>",
+        "pricing-text": null,
+        "time": "~ 1 день",
+        "cost": "~ ₽2800",
+        "cost-text": "+ петли если надо"
+      },
+      {
+        "pricing-title": "Пайка BGA чипа на плате",
+        "pricing-text": "пайка на паяльной станции на шары BGA",
+        "time": "~ 3 дня",
+        "cost": "~ ₽4500",
+        "cost-text": "+ микросхема, если надо"
+      },
+      {
+        "pricing-title": "Ремонт платы ноутбука после залития",
+        "pricing-text": "срок и цена зависит от сложности ситуации, гарантия минимум 3 месяца",
+        "time": "~ 2 дня",
+        "cost": "₽1500",
+        "cost-text": "чистка платы"
+      },
+      {
+        "pricing-title": "Нанесение жидкого металла (где он задуман)",
+        "pricing-text": "Thermal Grizzly или Coollaboratory",
+        "time": null,
+        "cost": "~ ₽2500",
+        "cost-text": "от расхода материала"
+      },
+      {
+        "pricing-title": "Замена термоинтерфейса, термопрокладок",
+        "pricing-text": "при необходимости",
+        "time": null,
+        "cost": "~ ₽2500",
+        "cost-text": "от объема материала"
+      },
+      {
+        "pricing-title": "Установить Windows 10/11 (драйвера, лицензия)",
+        "pricing-text": null,
+        "time": "1 день / сразу",
+        "cost": "₽1500 / ₽2500",
+        "cost-text": null
+      },
+      {
+        "pricing-title": "Установить Microsoft office (лицензия)",
+        "pricing-text": null,
+        "time": "1 день / сразу",
+        "cost": "₽1800 / ₽2500",
+        "cost-text": null
+      }
+    ],
+    "content": " context"
+  },
+  "loops": {
+    "canonical": "https://www.site.com/second.html",
+    "title": "tit",
+    "h1": "h1",
+    "serv_name": "ser",
+    "keywords": ["serv2"],
+    "description": "des",
+    "image": "images/hinges/image.webp",
+    "img_title": "tit",
+    "img_alt": "alt",
+    "message_under_table": "** При предъявлении студенческого билета, сделаю скидку 10%",
+    "images": [
+      {
+        "mini": "images/hinges/mhinges1.webp",
+        "alt": "Смазка петель",
+        "title": "Смазка",
+        "orig": "images/hinges/hinges1.jpg"
+      },
+      {
+        "mini": "images/hinges/mhinges2.webp",
+        "alt": "Крепление петель",
+        "title": "Крепления",
+        "orig": "images/hinges/hinges2.jpg"
+      },
+      {
+        "mini": "images/hinges/mhinges3.webp",
+        "alt": "Петли",
+        "title": "Внешний вид",
+        "orig": "images/hinges/hinges3.jpg"
+      },
+      {
+        "mini": "images/hinges/mhinges4.webp",
+        "alt": "Завальцованные петли ноутбука",
+        "title": "Завальцованные",
+        "orig": "images/hinges/hinges4.jpg"
+      }
+    ],
+    "price": [
+              {
+        "pricing-title": "Диагностика проблемы",
+        "pricing-text": "иногда нужно полностью разобрать со снятием матрицы",
+        "time": "от сразу до ~ 1 день",
+        "cost": "₽1000",
+        "cost-text": "в случае отказа от ремонта"
+      },
+      {
+        "pricing-title": "Очистить, смазать и расслабить петли",
+        "pricing-text": "со временем механизм петель высыхает и становится тугим, в результате выламывает крепления в корпусе",
+        "time": null,
+        "cost": "₽1600",
+        "cost-text": null
+      },
+      {
+        "pricing-title": "Восстановление крепления петель в корпусе",
+        "pricing-text": "устанавливаются гильзы винтов и закрепляются с гарантией",
+        "time": "~ 2 дня, от загруженности",
+        "cost": "~ ₽3800",
+        "cost-text": null
+      },
+      {
+        "pricing-title": "Замена петель",
+        "pricing-text": "редко, но повреждается и сама петля, в таком случае просто меняется, обычно на заказ",
+        "time": null,
+        "cost": "~ ₽1000",
+        "cost-text": "как правило"
+      }
+    ],
+    "content": "   content "
+  }
+
+
+}
